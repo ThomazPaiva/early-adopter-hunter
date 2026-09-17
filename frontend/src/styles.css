@@ -1,0 +1,52 @@
+:root {
+  --bg: #10151c;
+  --bg-elevated: #171e27;
+  --bg-elevated-2: #1e2631;
+  --line: #2a3341;
+  --line-soft: #212a36;
+  --text: #eae6dc;
+  --text-dim: #9aa4b2;
+  --text-faint: #626e7e;
+  --amber: #e0a458;
+  --amber-dim: #8a6b3d;
+  --teal: #5aa9a3;
+  --teal-dim: #3a6b67;
+  --red: #c1665a;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+body {
+  background-image: radial-gradient(ellipse 800px 500px at 85% -10%, rgba(224, 164, 88, 0.06), transparent),
+    radial-gradient(ellipse 600px 400px at 0% 100%, rgba(90, 169, 163, 0.05), transparent);
+}
+
+::selection {
+  background: var(--amber-dim);
+  color: var(--text);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+textarea,
+input {
+  font-family: inherit;
+}
