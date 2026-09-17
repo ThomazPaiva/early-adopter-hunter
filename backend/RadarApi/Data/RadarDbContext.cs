@@ -14,7 +14,7 @@ public class RadarDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Tags é List<string>; guardamos como JSON no SQLite (não existe tipo array nativo).
+        // Tags is a List<string>; we store it as a delimited string in SQLite (no native array type).
         modelBuilder.Entity<Signal>()
             .Property(s => s.Tags)
             .HasConversion(

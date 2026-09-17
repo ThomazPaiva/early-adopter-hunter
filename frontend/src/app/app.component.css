@@ -143,10 +143,10 @@ header.top {
   border: 1px solid transparent;
   text-transform: lowercase;
 }
-.status-novo { color: var(--teal); border-color: var(--teal-dim); background: rgba(90,169,163,0.08); }
-.status-observando { color: var(--amber); border-color: var(--amber-dim); background: rgba(224,164,88,0.08); }
-.status-oportunidade { color: #d7c98a; border-color: #6b6038; background: rgba(215,201,138,0.1); }
-.status-descartado { color: var(--text-faint); border-color: var(--line); background: transparent; }
+.status-new { color: var(--teal); border-color: var(--teal-dim); background: rgba(90,169,163,0.08); }
+.status-watching { color: var(--amber); border-color: var(--amber-dim); background: rgba(224,164,88,0.08); }
+.status-opportunity { color: #d7c98a; border-color: #6b6038; background: rgba(215,201,138,0.1); }
+.status-discarded { color: var(--text-faint); border-color: var(--line); background: transparent; }
 
 .card-snippet {
   color: var(--text-dim);
@@ -270,10 +270,10 @@ header.top {
   font-family: var(--font-mono);
   text-transform: lowercase;
 }
-.status-opt.status-novo.chosen { border-color: var(--teal-dim); color: var(--teal); background: rgba(90,169,163,0.08); }
-.status-opt.status-observando.chosen { border-color: var(--amber-dim); color: var(--amber); background: rgba(224,164,88,0.08); }
-.status-opt.status-oportunidade.chosen { border-color: #6b6038; color: #d7c98a; background: rgba(215,201,138,0.1); }
-.status-opt.status-descartado.chosen { border-color: var(--line); color: var(--text-faint); }
+.status-opt.status-new.chosen { border-color: var(--teal-dim); color: var(--teal); background: rgba(90,169,163,0.08); }
+.status-opt.status-watching.chosen { border-color: var(--amber-dim); color: var(--amber); background: rgba(224,164,88,0.08); }
+.status-opt.status-opportunity.chosen { border-color: #6b6038; color: #d7c98a; background: rgba(215,201,138,0.1); }
+.status-opt.status-discarded.chosen { border-color: var(--line); color: var(--text-faint); }
 
 .drawer-actions {
   display: flex;

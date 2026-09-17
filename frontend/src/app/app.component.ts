@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Signal, SignalInput, SignalStatus } from './models/signal';
 import { SignalService } from './services/signal.service';
 
-type FilterOption = 'Todos' | SignalStatus;
+type FilterOption = 'All' | SignalStatus;
 
 const EMPTY_FORM: SignalInput = {
   title: '',
@@ -15,7 +15,7 @@ const EMPTY_FORM: SignalInput = {
   q4: '',
   q5: '',
   tags: [],
-  status: 'Novo',
+  status: 'New',
 };
 
 @Component({
@@ -26,25 +26,25 @@ const EMPTY_FORM: SignalInput = {
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  // Estado como signals: no modo zoneless (padrão do Angular 22), é o
-  // signal.set()/update() que dispara a atualização da tela — inclusive
-  // quando a mudança vem de uma resposta assíncrona da API, fora de um
-  // evento de clique.
+  // State as signals: in zoneless mode (Angular 22's default), it's
+  // signal.set()/update() that triggers the screen update — including
+  // when the change comes from an async API response, outside of a
+  // click event.
   signalsList = signal<Signal[]>([]);
   loading = signal(true);
   errorMessage = signal('');
 
-  filters: FilterOption[] = ['Todos', 'Novo', 'Observando', 'Oportunidade', 'Descartado'];
-  currentFilter = signal<FilterOption>('Todos');
+  filters: FilterOption[] = ['All', 'New', 'Watching', 'Opportunity', 'Discarded'];
+  currentFilter = signal<FilterOption>('All');
 
-  statusOptions: SignalStatus[] = ['Novo', 'Observando', 'Oportunidade', 'Descartado'];
+  statusOptions: SignalStatus[] = ['New', 'Watching', 'Opportunity', 'Discarded'];
 
   drawerOpen = signal(false);
   editingId = signal<number | null>(null);
   tagsInput = signal('');
 
-  // O formulário em si é mutado apenas dentro de handlers de clique/ngModel,
-  // que já disparam detecção de mudança no Angular — não precisa ser signal.
+  // The form itself is only mutated inside click/ngModel handlers,
+  // which already trigger change detection in Angular — no need to be a signal.
   form: SignalInput = { ...EMPTY_FORM };
 
   toastMessage = signal('');
@@ -53,12 +53,12 @@ export class AppComponent implements OnInit {
   filteredSignals = computed(() => {
     const filter = this.currentFilter();
     const all = this.signalsList();
-    return filter === 'Todos' ? all : all.filter((s) => s.status === filter);
+    return filter === 'All' ? all : all.filter((s) => s.status === filter);
   });
 
   totalCount = computed(() => this.signalsList().length);
-  observandoCount = computed(() => this.signalsList().filter((s) => s.status === 'Observando').length);
-  oportunidadeCount = computed(() => this.signalsList().filter((s) => s.status === 'Oportunidade').length);
+  watchingCount = computed(() => this.signalsList().filter((s) => s.status === 'Watching').length);
+  opportunityCount = computed(() => this.signalsList().filter((s) => s.status === 'Opportunity').length);
 
   constructor(private signalService: SignalService) {}
 
@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.errorMessage.set('Não consegui falar com a API. Ela está rodando em localhost:5199?');
+        this.errorMessage.set('Could not reach the API. Is it running on localhost:5199?');
         this.loading.set(false);
       },
     });
@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
 
   formatDate(dateStr: string): string {
     const d = new Date(dateStr);
-    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+    return d.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
   openNewDrawer(): void {
@@ -128,7 +128,7 @@ export class AppComponent implements OnInit {
 
   save(): void {
     if (!this.form.title.trim()) {
-      this.showToast('Dá um título pro sinal antes de salvar');
+      this.showToast('Give the signal a title before saving');
       return;
     }
 
@@ -142,12 +142,12 @@ export class AppComponent implements OnInit {
 
     request.subscribe({
       next: () => {
-        this.showToast('Sinal salvo');
+        this.showToast('Signal saved');
         this.drawerOpen.set(false);
         this.editingId.set(null);
         this.loadSignals();
       },
-      error: () => this.showToast('Não foi possível salvar. Tenta de novo.'),
+      error: () => this.showToast('Could not save. Try again.'),
     });
   }
 
@@ -156,12 +156,12 @@ export class AppComponent implements OnInit {
     if (id === null) return;
     this.signalService.delete(id).subscribe({
       next: () => {
-        this.showToast('Sinal excluído');
+        this.showToast('Signal deleted');
         this.drawerOpen.set(false);
         this.editingId.set(null);
         this.loadSignals();
       },
-      error: () => this.showToast('Não foi possível excluir.'),
+      error: () => this.showToast('Could not delete.'),
     });
   }
 

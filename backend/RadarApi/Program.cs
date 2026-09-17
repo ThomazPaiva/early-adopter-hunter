@@ -10,15 +10,15 @@ builder.Services.AddDbContext<RadarDbContext>(options =>
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // serializa o enum SignalStatus como string ("Novo", "Observando"...)
-        // em vez de número, pra ficar direto de usar no front
+        // serialize the SignalStatus enum as a string ("New", "Watching"...)
+        // instead of a number, so it's ready to use on the frontend
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// CORS liberado para o Angular rodando em localhost:4200 (ng serve padrão)
+// CORS open for Angular running on localhost:4200 (default ng serve)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDev", policy =>
@@ -31,7 +31,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Aplica migrations pendentes.
+// Apply pending migrations.
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RadarDbContext>();

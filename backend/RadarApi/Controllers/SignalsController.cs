@@ -40,7 +40,7 @@ public class SignalsController : ControllerBase
     public async Task<ActionResult<Signal>> Create([FromBody] SignalInput input)
     {
         if (string.IsNullOrWhiteSpace(input.Title))
-            return BadRequest(new { message = "O título é obrigatório." });
+            return BadRequest(new { message = "Title is required." });
 
         var signal = new Signal
         {
@@ -67,7 +67,7 @@ public class SignalsController : ControllerBase
     public async Task<ActionResult<Signal>> Update(int id, [FromBody] SignalInput input)
     {
         if (string.IsNullOrWhiteSpace(input.Title))
-            return BadRequest(new { message = "O título é obrigatório." });
+            return BadRequest(new { message = "Title is required." });
 
         var signal = await _db.Signals.FindAsync(id);
         if (signal is null) return NotFound();

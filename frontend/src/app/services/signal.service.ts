@@ -5,7 +5,7 @@ import { Signal, SignalInput } from '../models/signal';
 
 @Injectable({ providedIn: 'root' })
 export class SignalService {
-  // em dev, o proxy.conf.json redireciona /api pro backend .NET (localhost:5199)
+  // in dev, proxy.conf.json redirects /api to the .NET backend (localhost:5199)
   private readonly baseUrl = '/api/signals';
 
   constructor(private http: HttpClient) {}

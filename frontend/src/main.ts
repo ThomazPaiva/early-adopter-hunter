@@ -5,7 +5,7 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZonelessChangeDetection(), // padrão do Angular 22: sem zone.js
+    provideZonelessChangeDetection(), // Angular 22 default: no zone.js
     provideHttpClient(),
   ],
 }).catch((err) => console.error(err));

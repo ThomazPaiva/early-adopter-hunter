@@ -1,4 +1,4 @@
-export type SignalStatus = 'Novo' | 'Observando' | 'Oportunidade' | 'Descartado';
+export type SignalStatus = 'New' | 'Watching' | 'Opportunity' | 'Discarded';
 
 export interface Signal {
   id: number;
@@ -14,7 +14,7 @@ export interface Signal {
   createdAt: string;
 }
 
-// payload enviado para criar/editar (sem id/createdAt, quem gera é o backend)
+// payload sent to create/edit (no id/createdAt, the backend generates those)
 export interface SignalInput {
   title: string;
   context?: string;

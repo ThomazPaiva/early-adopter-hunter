@@ -6,27 +6,27 @@ public class Signal
     public string Title { get; set; } = string.Empty;
     public string? Context { get; set; }
 
-    // As 5 perguntas do framework
-    public string? Q1 { get; set; } // Isso pode virar alguma coisa?
-    public string? Q2 { get; set; } // O que ficou possível agora?
-    public string? Q3 { get; set; } // O que as pessoas podem começar a fazer por causa disso?
-    public string? Q4 { get; set; } // Que problema novo isso cria?
-    public string? Q5 { get; set; } // O que ainda não existe para resolver esse problema?
+    // The framework's 5 questions
+    public string? Q1 { get; set; } // Could this turn into something?
+    public string? Q2 { get; set; } // What became possible now?
+    public string? Q3 { get; set; } // What can people start doing because of this?
+    public string? Q4 { get; set; } // What new problem does this create?
+    public string? Q5 { get; set; } // What doesn't exist yet to solve this problem?
 
     public List<string> Tags { get; set; } = new();
-    public SignalStatus Status { get; set; } = SignalStatus.Novo;
+    public SignalStatus Status { get; set; } = SignalStatus.New;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 
 public enum SignalStatus
 {
-    Novo,
-    Observando,
-    Oportunidade,
-    Descartado
+    New,
+    Watching,
+    Opportunity,
+    Discarded
 }
 
-// DTO usado para criar/editar, sem expor Id/CreatedAt no corpo da requisição
+// DTO used to create/edit, without exposing Id/CreatedAt in the request body
 public class SignalInput
 {
     public string Title { get; set; } = string.Empty;
@@ -37,5 +37,5 @@ public class SignalInput
     public string? Q4 { get; set; }
     public string? Q5 { get; set; }
     public List<string> Tags { get; set; } = new();
-    public SignalStatus Status { get; set; } = SignalStatus.Novo;
+    public SignalStatus Status { get; set; } = SignalStatus.New;
 }

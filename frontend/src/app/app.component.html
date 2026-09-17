@@ -1,13 +1,23 @@
 <div class="shell">
   <header class="top">
     <div class="brand">
-      <h1>Radar de sinais</h1>
-      <p>Um caderno de bordo para treinar o olhar de early adopter: registrar o que muda, o que fica possível, e onde ainda falta uma solução.</p>
+      <h1>The Early Adopter</h1>
+      <p>A logbook for training the early adopter eye: track what's changing, what's becoming possible, and where a
+        solution is still missing.</p>
     </div>
     <div class="stats-row">
-      <div class="stat"><div class="num">{{ totalCount() }}</div><div class="label">sinais</div></div>
-      <div class="stat"><div class="num">{{ observandoCount() }}</div><div class="label">em observação</div></div>
-      <div class="stat"><div class="num">{{ oportunidadeCount() }}</div><div class="label">oportunidades</div></div>
+      <div class="stat">
+        <div class="num">{{ totalCount() }}</div>
+        <div class="label">signals</div>
+      </div>
+      <div class="stat">
+        <div class="num">{{ watchingCount() }}</div>
+        <div class="label">watching</div>
+      </div>
+      <div class="stat">
+        <div class="num">{{ opportunityCount() }}</div>
+        <div class="label">opportunities</div>
+      </div>
     </div>
   </header>
 
@@ -15,14 +25,10 @@
 
   <div class="controls">
     <div class="filters">
-      <button
-        *ngFor="let f of filters"
-        class="filter-pill"
-        [class.active]="currentFilter() === f"
-        (click)="setFilter(f)"
-      >{{ f }}</button>
+      <button *ngFor="let f of filters" class="filter-pill" [class.active]="currentFilter() === f"
+        (click)="setFilter(f)">{{ f }}</button>
     </div>
-    <button class="new-btn" (click)="openNewDrawer()">+ Novo sinal</button>
+    <button class="new-btn" (click)="openNewDrawer()">+ New signal</button>
   </div>
 
   <div class="list" *ngIf="!loading() && filteredSignals().length > 0">
@@ -43,76 +49,75 @@
 
   <div class="empty" *ngIf="!loading() && filteredSignals().length === 0">
     <div class="glyph">◎</div>
-    <h3>{{ totalCount() === 0 ? 'Nenhum sinal ainda' : 'Nada por aqui com esse filtro' }}</h3>
-    <p>Assim que você perceber algo — um lançamento, uma mudança, um "isso agora ficou possível" — registre aqui antes de esquecer.</p>
+    <h3>{{ totalCount() === 0 ? 'No signals yet' : 'Nothing here with this filter' }}</h3>
+    <p>As soon as you notice something — a launch, a shift, a "this is now possible" — log it here before you forget.
+    </p>
   </div>
 </div>
 
 <div class="overlay" [class.open]="drawerOpen()" (click)="$event.target === $event.currentTarget && closeDrawer()">
   <div class="drawer">
     <div class="drawer-head">
-      <h2>{{ editingId() ? 'Editar sinal' : 'Novo sinal' }}</h2>
+      <h2>{{ editingId() ? 'Edit signal' : 'New signal' }}</h2>
       <button class="close-btn" (click)="closeDrawer()">✕</button>
     </div>
 
     <div class="field">
-      <label>O que você percebeu</label>
-      <input type="text" [(ngModel)]="form.title" placeholder="Ex: OpenAI lançou modo voz em tempo real na API">
+      <label>What you noticed</label>
+      <input type="text" [(ngModel)]="form.title" placeholder="E.g.: OpenAI launched real-time voice mode in the API">
     </div>
 
     <div class="field">
-      <label>Contexto rápido</label>
-      <textarea [(ngModel)]="form.context" placeholder="De onde veio esse sinal, o que aconteceu, quem está falando disso"></textarea>
+      <label>Quick context</label>
+      <textarea [(ngModel)]="form.context"
+        placeholder="Where this signal came from, what happened, who's talking about it"></textarea>
     </div>
 
     <div class="field">
-      <label>1 · Isso pode virar alguma coisa?</label>
-      <textarea [(ngModel)]="form.q1" placeholder="Seu palpite inicial, mesmo cru"></textarea>
+      <label>1 · Could this turn into something?</label>
+      <textarea [(ngModel)]="form.q1" placeholder="Your initial hunch, even if it's rough"></textarea>
     </div>
 
     <div class="field">
-      <label>2 · O que ficou possível agora?</label>
-      <textarea [(ngModel)]="form.q2" placeholder="O que antes era caro, lento ou impossível e deixou de ser"></textarea>
+      <label>2 · What became possible now?</label>
+      <textarea [(ngModel)]="form.q2"
+        placeholder="What used to be expensive, slow, or impossible and no longer is"></textarea>
     </div>
 
     <div class="field">
-      <label>3 · O que as pessoas podem começar a fazer por causa disso?</label>
-      <textarea [(ngModel)]="form.q3" placeholder="Comportamentos ou fluxos novos que isso libera"></textarea>
+      <label>3 · What can people start doing because of this?</label>
+      <textarea [(ngModel)]="form.q3" placeholder="New behaviors or workflows this unlocks"></textarea>
     </div>
 
     <div class="field">
-      <label>4 · Que problema novo isso cria?</label>
-      <textarea [(ngModel)]="form.q4" placeholder="Toda capacidade nova cria um atrito ou risco novo"></textarea>
+      <label>4 · What new problem does this create?</label>
+      <textarea [(ngModel)]="form.q4" placeholder="Every new capability creates a new friction or risk"></textarea>
     </div>
 
     <div class="field">
-      <label>5 · O que ainda não existe para resolver esse problema?</label>
-      <textarea [(ngModel)]="form.q5" placeholder="O espaço em branco — é aqui que mora a oportunidade"></textarea>
+      <label>5 · What doesn't exist yet to solve this problem?</label>
+      <textarea [(ngModel)]="form.q5" placeholder="The blank space — that's where the opportunity lives"></textarea>
     </div>
 
     <div class="field">
       <label>Tags</label>
-      <span class="hint">separadas por vírgula</span>
-      <input type="text" [ngModel]="tagsInput()" (ngModelChange)="tagsInput.set($event)" placeholder="ia, audio, devtools">
+      <span class="hint">comma-separated</span>
+      <input type="text" [ngModel]="tagsInput()" (ngModelChange)="tagsInput.set($event)"
+        placeholder="ai, audio, devtools">
     </div>
 
     <div class="field">
       <label>Status</label>
       <div class="status-select">
-        <button
-          *ngFor="let opt of statusOptions"
-          class="status-opt"
-          [ngClass]="statusClass(opt)"
-          [class.chosen]="form.status === opt"
-          (click)="setFormStatus(opt)"
-        >{{ opt }}</button>
+        <button *ngFor="let opt of statusOptions" class="status-opt" [ngClass]="statusClass(opt)"
+          [class.chosen]="form.status === opt" (click)="setFormStatus(opt)">{{ opt }}</button>
       </div>
     </div>
 
     <div class="drawer-actions">
-      <button class="delete-btn" *ngIf="editingId()" (click)="deleteCurrent()">Excluir sinal</button>
+      <button class="delete-btn" *ngIf="editingId()" (click)="deleteCurrent()">Delete signal</button>
       <span *ngIf="!editingId()"></span>
-      <button class="save-btn" (click)="save()">Salvar sinal</button>
+      <button class="save-btn" (click)="save()">Save signal</button>
     </div>
   </div>
 </div>
